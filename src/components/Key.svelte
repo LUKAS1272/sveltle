@@ -1,8 +1,10 @@
 <script>
     export let letter = '';
+    import { text } from "../store.js";
 </script>
 
-<div class="key">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="key" on:click={() => $text += letter}>
     {letter}
 </div>
 
