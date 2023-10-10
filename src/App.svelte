@@ -1,21 +1,33 @@
 <script>
 	import Keyboard from './components/Keyboard.svelte';
 	import { text } from './store.js';
+	import Board from './components/Board.svelte';
 
-	function Aaa(event) {
-		if (event.repeat) { return; }
+	import { grid, currentRow, currentCol, isSolved } from './store.js';
+	import { check } from './components/Cell.svelte';
 
-		if (event.keyCode >= 65 && event.keyCode <= 90) {
+	function KeyClicked(event) {
+		if (event.repeat || $isSolved) { return; }
+
+		if (event.keyCode >= 65 && event.keyCode <= 90 && $currentCol <= 4) {
 			$text += event.key;
-		} else if (event.key === "Shift") {
-			console.log("Shift");
-		} else if (event.key === "Enter") {
+			$grid[$currentRow][$currentCol] = event.key;
+			$currentCol++;
+		} else if (event.key === "Backspace") {
+			console.log("Backspace");
+			$currentCol--;
+			$grid[$currentRow][$currentCol] = '';
+		} else if (event.key === "Enter" && $currentCol == 5) {
 			console.log("Enter");
+			$currentRow++;
+			$currentCol = 0;
+			check();
 		}
 	}
 </script>
 
 <p>Input: {$text}</p>
+<Board />
 <Keyboard />
 
-<svelte:window on:keydown={Aaa} />
+<svelte:window on:keydown={KeyClicked} />
