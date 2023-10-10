@@ -7,16 +7,17 @@
 
 	function KeyClicked(event) {
 		if (event.repeat || $isSolved) { return; }
+		let key = event.key.toLowerCase();
 
-		if (event.keyCode >= 65 && event.keyCode <= 90 && $currentCol <= 4) {
-			$text += event.key;
-			$grid[$currentRow][$currentCol] = event.key;
+		if (key.charCodeAt(0) >= 97 && key.charCodeAt(0) <= 122 && $currentCol < 5 && key.length === 1) {
+			$text += key;
+			$grid[$currentRow][$currentCol] = key;
 			$currentCol++;
-		} else if (event.key === "Backspace" && $currentCol != 0) {
+		} else if (key == "backspace" && $currentCol != 0) {
 			console.log("Backspace");
 			$currentCol--;
 			$grid[$currentRow][$currentCol] = '';
-		} else if (event.key === "Enter" && $currentCol == 5) {
+		} else if (key == "enter" && $currentCol == 5) {
 			console.log("Enter");
 			if ($grid[$currentRow].join('') == $solution) { $isSolved = true; }
 			$currentRow++;
@@ -25,8 +26,32 @@
 	}
 </script>
 
-<p>Input: {$text}</p>
-<Board />
-<Keyboard />
+
+
+{#if false}
+	<p>Input: {$text}</p>
+{/if}
+
+<main>
+	<nav>Sveltle</nav>
+	<Board />
+	<Keyboard />
+</main>
 
 <svelte:window on:keydown={KeyClicked} />
+
+<style>
+	nav {
+		width: 100%;
+		font-size: 2.5em;
+		font-weight: 900;
+		color: #fff;
+		background-color: #111;
+		text-align: center;
+		padding: 25px 0;
+	}
+
+	main {
+		height: fit-content;
+	}
+</style>

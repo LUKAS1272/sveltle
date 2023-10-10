@@ -20,6 +20,6 @@
     }
 
     .board {
-        margin-bottom: 50px;
+        margin: 75px 0 30px;
     }
 </style>

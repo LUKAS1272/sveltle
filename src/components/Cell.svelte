@@ -9,11 +9,11 @@
 
 {#if $currentRow > y}
     {#if $solution[x] === letter}
-        <div class="letter" style="background-color: var(--right);">{letter}</div>
+        <div class="letter no-border" style="background-color: var(--right);">{letter}</div>
     {:else if $solution.includes(letter)}
-        <div class="letter" style="background-color: var(--different);">{letter}</div> 
+        <div class="letter no-border" style="background-color: var(--different);">{letter}</div> 
     {:else}
-        <div class="letter" style="background-color: var(--bg);">{letter}</div>
+        <div class="letter no-border" style="background-color: var(--bg);">{letter}</div>
     {/if}
 {:else}
     <div class="letter">{letter}</div>
@@ -23,17 +23,18 @@
     .letter {
         text-transform: uppercase;
         background-color: #333;
-        color: #fff;
-        width: 75px; height: 75px;
+        color: var(--text);
+        width: 70px; height: 70px;
         display: flex;
         justify-content: center; align-items: center;
         font-size: 2em;
         margin: 3px;
+        border: 2px solid var(--border);
+        box-sizing: border-box;
+        user-select: none;
     }
 
-    :root {
-        --bg: #111;
-        --right: #2e8300;
-        --different: #dd8100;
+    .no-border {
+        border: none;
     }
 </style>
