@@ -1,10 +1,9 @@
 <script>
 	import Keyboard from './components/Keyboard.svelte';
-	import { text } from './store.js';
+	import { text, solution } from './store.js';
 	import Board from './components/Board.svelte';
 
 	import { grid, currentRow, currentCol, isSolved } from './store.js';
-	import { check } from './components/Cell.svelte';
 
 	function KeyClicked(event) {
 		if (event.repeat || $isSolved) { return; }
@@ -13,15 +12,15 @@
 			$text += event.key;
 			$grid[$currentRow][$currentCol] = event.key;
 			$currentCol++;
-		} else if (event.key === "Backspace") {
+		} else if (event.key === "Backspace" && $currentCol != 0) {
 			console.log("Backspace");
 			$currentCol--;
 			$grid[$currentRow][$currentCol] = '';
 		} else if (event.key === "Enter" && $currentCol == 5) {
 			console.log("Enter");
+			if ($grid[$currentRow].join('') == $solution) { $isSolved = true; }
 			$currentRow++;
 			$currentCol = 0;
-			check();
 		}
 	}
 </script>
