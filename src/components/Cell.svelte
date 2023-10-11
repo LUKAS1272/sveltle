@@ -22,7 +22,7 @@
 <style>
     .letter {
         text-transform: uppercase;
-        background-color: #333;
+        background-color: var(--cellsBg);
         color: var(--text);
         width: 70px; height: 70px;
         display: flex;

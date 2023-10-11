@@ -1,6 +1,7 @@
 <script>
     export let letter = '';
     import { grid, currentRow, currentCol, isSolved, text, solution } from '../store.js';
+    import { isAvailable } from '../keyStore.js';
 
     function KeyClicked(key) {
 		if (key.charCodeAt(0) >= 97 && key.charCodeAt(0) <= 122 && $currentCol < 5 && key.length === 1) {
@@ -20,16 +21,24 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="key" on:click={KeyClicked(letter.toLowerCase())}>
-    {letter}
-</div>
+{#if $isAvailable[letter] === -2}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="key notKnown" on:click={KeyClicked(letter.toLowerCase())}>{letter}</div>
+{:else if $isAvailable[letter] === -1}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="key notAvailable" on:click={KeyClicked(letter.toLowerCase())}>{letter}</div>
+{:else if $isAvailable[letter] === 0}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="key differentPlace" on:click={KeyClicked(letter.toLowerCase())}>{letter}</div>
+{:else if $isAvailable[letter] === 1}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="key rightPlace" on:click={KeyClicked(letter.toLowerCase())}>{letter}</div>
+{/if}
 
 <style>
     .key {
         text-transform: uppercase;
         color: var(--text);
-        background-color: #222;
         min-width: fit-content;
         display: flex;
         justify-content: center; align-items: center;
@@ -41,4 +50,9 @@
         user-select: none;
         cursor: pointer;
     }
+
+    .notKnown { background-color: var(--cellsBg); }
+    .notAvailable { background-color: var(--bg); }
+    .differentPlace { background-color: var(--different); }
+    .rightPlace { background-color: var(--right); }
 </style>
