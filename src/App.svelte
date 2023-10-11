@@ -2,6 +2,7 @@
 	import Keyboard from './components/Keyboard.svelte';
 	import { text, solution } from './store.js';
 	import Board from './components/Board.svelte';
+	import State from './components/State.svelte';
 
 	import { grid, currentRow, currentCol, isSolved } from './store.js';
 	import { isAvailable } from './keyStore.js';
@@ -38,7 +39,11 @@
 	}
 </script>
 
-
+{#if $isSolved === true}
+	<State didWin={true} />
+{:else if $currentRow > 5}
+	<State didWin={false} />
+{/if}
 
 {#if false}
 	<p>Input: {$text}</p>
