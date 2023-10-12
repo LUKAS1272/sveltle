@@ -1,6 +1,6 @@
 <script>
 	import Keyboard from './components/Keyboard.svelte';
-	import { text, solution } from './store.js';
+	import { solution } from './wordStore.js';
 	import Board from './components/Board.svelte';
 	import State from './components/State.svelte';
 
@@ -12,7 +12,6 @@
 		let key = event.key.toLowerCase();
 
 		if (key.charCodeAt(0) >= 97 && key.charCodeAt(0) <= 122 && $currentCol < 5 && key.length === 1) {
-			$text += key;
 			$grid[$currentRow][$currentCol] = key;
 			$currentCol++;
 		} else if (key == "backspace" && $currentCol != 0) {
@@ -43,10 +42,6 @@
 	<State didWin={true} />
 {:else if $currentRow > 5}
 	<State didWin={false} />
-{/if}
-
-{#if false}
-	<p>Input: {$text}</p>
 {/if}
 
 <main>

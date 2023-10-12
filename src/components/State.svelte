@@ -1,6 +1,6 @@
 <script>
     export let didWin = false;
-    import { solution } from '../store.js';
+    import { solution } from '../wordStore.js';
 </script>
 
 <main>

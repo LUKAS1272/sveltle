@@ -1,9 +1,5 @@
 import { writable } from "svelte/store";
 
-export const text = writable('');
-
-export const solution = writable('ratio');
-
 export let grid = writable([]);
 export let currentRow = writable(0);
 export let currentCol = writable(0);

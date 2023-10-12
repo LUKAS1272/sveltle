@@ -1,6 +1,7 @@
 <script>
   import { check_outros } from 'svelte/internal';
-    import { grid, currentRow, solution } from '../store.js';
+    import { grid, currentRow } from '../store.js';
+    import { solution } from '../wordStore.js';
 
     export let x;
     export let y;

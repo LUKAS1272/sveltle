@@ -1,14 +1,14 @@
 <script>
     export let letter = '';
-    import { grid, currentRow, currentCol, isSolved, text, solution } from '../store.js';
+    import { grid, currentRow, currentCol, isSolved } from '../store.js';
+    import { solution } from '../wordStore.js';
     import { isAvailable } from '../keyStore.js';
 
     function KeyClicked(key) {
 		if (key.charCodeAt(0) >= 97 && key.charCodeAt(0) <= 122 && $currentCol < 5 && key.length === 1) {
-			$text += key;
 			$grid[$currentRow][$currentCol] = key;
 			$currentCol++;
-		} else if (key == "backspace" && $currentCol != 0) {
+		} else if (key == "del" && $currentCol != 0) {
 			console.log("Backspace");
 			$currentCol--;
 			$grid[$currentRow][$currentCol] = '';
