@@ -1,7 +1,7 @@
 <script>
     export let letter = '';
     import { grid, currentRow, currentCol, isSolved } from '../store.js';
-    import { solution } from '../wordStore.js';
+    import { solution, words } from '../wordStore.js';
     import { isAvailable } from '../keyStore.js';
 
     function KeyClicked(key) {
@@ -9,14 +9,30 @@
 			$grid[$currentRow][$currentCol] = key;
 			$currentCol++;
 		} else if (key == "del" && $currentCol != 0) {
-			console.log("Backspace");
 			$currentCol--;
 			$grid[$currentRow][$currentCol] = '';
-		} else if (key == "enter" && $currentCol == 5) {
-			console.log("Enter");
-			if ($grid[$currentRow].join('') == $solution) { $isSolved = true; }
-			$currentRow++;
-			$currentCol = 0;
+		} else if (key == "enter") {
+            if ($currentCol === 5) {
+                if (words.includes($grid[$currentRow].join(''))) {
+                    for (let i = 0; i < 5; i++) {
+						if ($solution[i] === $grid[$currentRow][i]) {
+							$isAvailable[$grid[$currentRow][i]] = 1;
+						} else if ($solution.includes($grid[$currentRow][i]) && $isAvailable[$grid[$currentRow][i]] < 0) {
+							$isAvailable[$grid[$currentRow][i]] = 0;
+						} else if ($isAvailable[$grid[$currentRow][i]] < -1) {
+							$isAvailable[$grid[$currentRow][i]] = -1;
+						}
+					}
+
+                    if ($grid[$currentRow].join('') == $solution) { $isSolved = true; }
+                    $currentRow++;
+                    $currentCol = 0;
+                } else {
+                    console.log("Word not valid");
+                }
+            } else {
+                console.log("Word not long enough");
+            }
 		}
 	}
 </script>
